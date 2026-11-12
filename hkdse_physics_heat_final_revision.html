@@ -1,0 +1,646 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>HKDSE Physics: Heat - Comprehensive Revision & Quiz</title>
+    <style>
+        :root { --primary: #2c3e50; --secondary: #3498db; --accent: #16a085; --hard: #e74c3c; --bg: #f8f9fa; }
+        body { font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; line-height: 1.6; color: #333; max-width: 900px; margin: 0 auto; padding: 20px; transition: background 0.3s; background-color: var(--bg); }
+        body.lang-en .zh { display: none !important; }
+        body.lang-zh .en { display: none !important; }
+        
+        .header-controls { display: flex; justify-content: space-between; align-items: center; margin-bottom: 20px; border-bottom: 3px solid var(--secondary); padding-bottom: 15px; background: white; padding: 20px; border-radius: 8px; box-shadow: 0 2px 5px rgba(0,0,0,0.05);}
+        h1 { color: var(--primary); margin: 0 0 10px 0; }
+        h2 { border-left: 5px solid var(--secondary); padding-left: 10px; margin-top: 40px; color: var(--primary); }
+        h2.hard-section { border-left-color: var(--hard); }
+        h3 { color: var(--secondary); }
+        
+        .lang-btn { background-color: var(--primary); color: white; border: none; padding: 10px 20px; font-size: 16px; cursor: pointer; border-radius: 5px; font-weight: bold; transition: 0.2s; }
+        .lang-btn:hover { background-color: #1a252f; }
+        
+        .section-label { display: inline-block; padding: 3px 8px; border-radius: 4px; font-size: 12px; font-weight: bold; margin-bottom: 10px; color: white; }
+        .label-easy { background-color: #2ecc71; }
+        .label-medium { background-color: #f39c12; }
+        .label-hard { background-color: var(--hard); }
+
+        .concept-box { background-color: white; border-left: 4px solid var(--secondary); padding: 20px; margin-bottom: 20px; border-radius: 0 8px 8px 0; box-shadow: 0 2px 5px rgba(0,0,0,0.05); }
+        .mistake-box { background-color: #fff3f3; border-left: 4px solid var(--hard); padding: 20px; margin-bottom: 20px; border-radius: 0 8px 8px 0; box-shadow: 0 2px 5px rgba(0,0,0,0.05); }
+        
+        /* Table Styles */
+        .data-table { width: 100%; border-collapse: collapse; margin-top: 10px; margin-bottom: 15px; background: white; }
+        .data-table th, .data-table td { border: 1px solid #eee; padding: 12px; text-align: left; }
+        .data-table th { background-color: #f8f9fa; color: var(--primary); font-weight: bold; border-bottom: 2px solid var(--secondary); }
+        .data-table tr:hover { background-color: #f1f8ff; }
+        
+        /* SVG Graph Container */
+        .svg-container { background: white; padding: 20px; border-radius: 8px; border: 1px solid #ddd; text-align: center; margin-top: 15px; margin-bottom: 15px; overflow-x: auto; box-shadow: inset 0 0 10px rgba(0,0,0,0.02); }
+        
+        .question-card { background-color: #fff; border: 1px solid #ddd; border-radius: 8px; padding: 25px; margin-bottom: 25px; box-shadow: 0 4px 6px rgba(0,0,0,0.05); }
+        .question-card.hard { border-top: 4px solid var(--hard); }
+        .question-card.medium { border-top: 4px solid #f39c12; }
+        .question-card h3 { margin-top: 0; }
+        
+        .hint-box { background-color: #fff3cd; border-left: 4px solid #ffc107; padding: 15px; margin: 15px 0; display: none; border-radius: 4px; }
+        .solution-box { background-color: #e8f8f5; border-left: 4px solid var(--accent); padding: 15px; margin: 15px 0; display: none; border-radius: 4px; }
+        
+        .marks { color: var(--hard); font-weight: bold; float: right; font-size: 0.9em; }
+        
+        .btn { color: white; border: none; padding: 10px 18px; cursor: pointer; border-radius: 4px; margin-right: 10px; margin-top: 10px; font-weight: bold; transition: 0.2s; }
+        .btn-hint { background-color: #f39c12; }
+        .btn-hint:hover { background-color: #d68910; }
+        .btn-sol { background-color: var(--secondary); }
+        .btn-sol:hover { background-color: #2980b9; }
+        
+        /* MCQ Styles */
+        .mcq-option { display: block; padding: 12px 15px; margin: 8px 0; border: 1px solid #e0e0e0; border-radius: 6px; cursor: pointer; transition: 0.2s; background: #fafafa; }
+        .mcq-option:hover { background-color: #edf2f7; border-color: var(--secondary); }
+        .mcq-option input { margin-right: 10px; transform: scale(1.2); }
+        
+        .mcq-feedback { margin-top: 15px; font-weight: bold; display: none; padding: 15px; border-radius: 6px; }
+        .mcq-feedback.correct { background-color: #d4edda; color: #155724; border: 1px solid #c3e6cb; }
+        .mcq-feedback.incorrect { background-color: #f8d7da; color: #721c24; border: 1px solid #f5c6cb; }
+        
+        .mc-submit-btn { background-color: var(--accent); display: block; width: 100%; margin-top: 30px; font-size: 20px; padding: 20px; border: none; color: white; font-weight: bold; border-radius: 8px; cursor: pointer; box-shadow: 0 4px 6px rgba(22, 160, 133, 0.3); transition: 0.3s;}
+        .mc-submit-btn:hover { background-color: #117a65; transform: translateY(-2px); box-shadow: 0 6px 8px rgba(22, 160, 133, 0.4); }
+    </style>
+
+    <script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
+    <script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+    <script>
+      window.MathJax = {
+        tex: {
+          inlineMath: [['$', '$'], ['\\(', '\\)']]
+        }
+      };
+    </script>
+</head>
+<body class="lang-en">
+
+    <div class="header-controls">
+        <div>
+            <h1 class="en">HKDSE Physics: Heat</h1>
+            <h1 class="zh">香港中學文憑物理：熱學</h1>
+            <p class="en" style="margin:0; color:#7f8c8d; font-size:18px;">Comprehensive Review: From Basics to Mastery</p>
+            <p class="zh" style="margin:0; color:#7f8c8d; font-size:18px;">全面溫習：由淺入深</p>
+        </div>
+        <button class="lang-btn" onclick="toggleLanguage()">
+            <span class="en">文 Switch to 中文</span>
+            <span class="zh">A Switch to English</span>
+        </button>
+    </div>
+
+    <!-- LEVEL 1: FOUNDATION -->
+    <h2 class="en">Level 1: Foundation (Concepts & Formulas)</h2>
+    <h2 class="zh">第一級：基礎 (概念與公式)</h2>
+    
+    <div class="concept-box">
+        <span class="section-label label-easy en">Review</span>
+        <span class="section-label label-easy zh">溫習</span>
+        <h3 class="en">Key Formulas</h3>
+        <h3 class="zh">主要公式</h3>
+        <table class="data-table">
+            <thead>
+                <tr>
+                    <th class="en">Concept</th><th class="zh">概念</th>
+                    <th class="en">Equation</th><th class="zh">公式</th>
+                    <th class="en">Symbols & Meaning</th><th class="zh">符號及意義</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td class="en">Specific Heat Capacity</td><td class="zh">比熱容量</td>
+                    <td><b>E = mc&Delta;T</b></td>
+                    <td class="en"><b>E</b>: Energy (J), <b>m</b>: mass (kg), <b>c</b>: spec. heat cap. (J kg<sup>-1</sup> &deg;C<sup>-1</sup>)</td>
+                    <td class="zh"><b>E</b>: 能量 (J), <b>m</b>: 質量 (kg), <b>c</b>: 比熱容量 (J kg<sup>-1</sup> &deg;C<sup>-1</sup>)</td>
+                </tr>
+                <tr>
+                    <td class="en">Specific Latent Heat</td><td class="zh">比潛熱</td>
+                    <td><b>E = ml</b></td>
+                    <td class="en"><b>l</b>: specific latent heat (J kg<sup>-1</sup>)</td>
+                    <td class="zh"><b>l</b>: 比潛熱 (J kg<sup>-1</sup>)</td>
+                </tr>
+                <tr>
+                    <td class="en">Gas Kinetic Theory</td><td class="zh">氣體分子運動論</td>
+                    <td><b>E<sub>k</sub> = &frac32; (R/N<sub>A</sub>) T</b></td>
+                    <td class="en"><b>E<sub>k</sub></b>: Avg kinetic energy. <i>Depends ONLY on absolute Temp (K).</i></td>
+                    <td class="zh"><b>E<sub>k</sub></b>: 平均動能。<i>僅取決於絕對溫度 (K)。</i></td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+
+    <div class="concept-box">
+        <span class="section-label label-easy en">Review</span>
+        <span class="section-label label-easy zh">溫習</span>
+        <h3 class="en">Heat Transfer Mechanisms</h3>
+        <h3 class="zh">熱傳遞機制比較</h3>
+        <table class="data-table">
+            <thead>
+                <tr>
+                    <th class="en">Mechanism</th><th class="zh">機制</th>
+                    <th class="en">Requires Medium?</th><th class="zh">需要介質？</th>
+                    <th class="en">Key Detail</th><th class="zh">重點</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td class="en"><b>Conduction</b></td><td class="zh"><b>傳導</b></td>
+                    <td class="en">Yes (Solids)</td><td class="zh">是 (固體)</td>
+                    <td class="en">Free electron collision makes metals good conductors.</td>
+                    <td class="zh">自由電子碰撞使金屬成為優良導體。</td>
+                </tr>
+                <tr>
+                    <td class="en"><b>Convection</b></td><td class="zh"><b>對流</b></td>
+                    <td class="en">Yes (Fluids)</td><td class="zh">是 (流體)</td>
+                    <td class="en">Hot fluid expands, density decreases, and it rises.</td>
+                    <td class="zh">熱流體膨脹，密度降低並上升。</td>
+                </tr>
+                <tr>
+                    <td class="en"><b>Radiation</b></td><td class="zh"><b>輻射</b></td>
+                    <td class="en">No (Vacuum)</td><td class="zh">否 (真空)</td>
+                    <td class="en">Dull black = good emitter/absorber. Shiny = good reflector.</td>
+                    <td class="zh">暗黑 = 良好發射/吸收體。光澤 = 良好反射體。</td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+
+    <div class="mistake-box">
+        <span class="section-label label-easy en">Exam Traps</span>
+        <span class="section-label label-easy zh">考試陷阱</span>
+        <h3 class="en" style="color:#c0392b; margin-top:0;">Common Mistakes</h3>
+        <h3 class="zh" style="color:#c0392b; margin-top:0;">常犯錯誤</h3>
+        <ul class="en" style="margin-bottom:0;">
+            <li><strong>Thermometers:</strong> Liquid-in-glass cannot measure solid blocks due to poor thermal contact. Use an IR thermometer.</li>
+            <li><strong>Latent Heat Control:</strong> Forgetting the control setup for ice melted by room temperature causes an underestimation of $l_f$.</li>
+            <li><strong>Kinetic Theory:</strong> Heavy and light gas molecules at the same temperature have the same KE, but heavy ones move <i>slower</i>.</li>
+        </ul>
+        <ul class="zh" style="margin-bottom:0;">
+            <li><strong>溫度計：</strong> 玻璃液體溫度計不能量度固體，因為熱接觸不良。應使用紅外線溫度計。</li>
+            <li><strong>潛熱對照：</strong> 忘記扣除室溫熔化冰的對照裝置，會導致低估 $l_f$。</li>
+            <li><strong>分子運動論：</strong> 相同溫度下，重分子和輕分子動能相同，但重分子移動<i>較慢</i>。</li>
+        </ul>
+    </div>
+
+    <!-- LEVEL 2: INTERMEDIATE -->
+    <h2 class="en">Level 2: Intermediate (Graphs & Standard Applications)</h2>
+    <h2 class="zh">第二級：中階 (圖表與標準應用)</h2>
+
+    <div class="concept-box">
+        <span class="section-label label-medium en">Visual Concept</span>
+        <span class="section-label label-medium zh">圖像概念</span>
+        <h3 class="en">Heating Curve Analysis</h3>
+        <h3 class="zh">加熱曲線分析</h3>
+        <div class="svg-container">
+            <svg width="600" height="350" viewBox="0 0 600 350" xmlns="http://www.w3.org/2000/svg">
+                <!-- Axes -->
+                <line x1="50" y1="300" x2="580" y2="300" stroke="black" stroke-width="2" />
+                <line x1="50" y1="300" x2="50" y2="20" stroke="black" stroke-width="2" />
+                <text x="270" y="340" font-family="sans-serif" font-size="16" class="en">Energy Supplied</text>
+                <text x="270" y="340" font-family="sans-serif" font-size="16" class="zh">供應的能量</text>
+                <text x="15" y="180" font-family="sans-serif" font-size="16" transform="rotate(-90 25,180)" class="en">Temperature (&deg;C)</text>
+                <text x="15" y="180" font-family="sans-serif" font-size="16" transform="rotate(-90 25,180)" class="zh">溫度 (&deg;C)</text>
+                <!-- Plot Lines -->
+                <polyline points="50,260 150,180 280,180 400,80 550,80" fill="none" stroke="#e74c3c" stroke-width="4" stroke-linejoin="round" />
+                <!-- Annotations -->
+                <text x="65" y="210" font-family="sans-serif" font-size="14" font-weight="bold" fill="#2980b9" class="en">Solid (c)</text>
+                <text x="65" y="210" font-family="sans-serif" font-size="14" font-weight="bold" fill="#2980b9" class="zh">固體 (c)</text>
+                <text x="175" y="170" font-family="sans-serif" font-size="14" font-weight="bold" fill="#16a085" class="en">Melting (l_f)</text>
+                <text x="175" y="170" font-family="sans-serif" font-size="14" font-weight="bold" fill="#16a085" class="zh">熔化 (l_f)</text>
+                <text x="295" y="120" font-family="sans-serif" font-size="14" font-weight="bold" fill="#2980b9" class="en">Liquid (c)</text>
+                <text x="295" y="120" font-family="sans-serif" font-size="14" font-weight="bold" fill="#2980b9" class="zh">液體 (c)</text>
+                <!-- Gradients logic -->
+                <rect x="350" y="200" width="230" height="70" fill="#f8f9fa" stroke="#ddd" rx="5" />
+                <text x="360" y="225" font-family="sans-serif" font-size="13" class="en">Gradient = &Delta;T / &Delta;E = 1 / mc</text>
+                <text x="360" y="225" font-family="sans-serif" font-size="13" class="zh">斜率 = &Delta;T / &Delta;E = 1 / mc</text>
+                <text x="360" y="250" font-family="sans-serif" font-size="13" font-weight="bold" color="#e74c3c" class="en">Steeper slope &rarr; Smaller c</text>
+                <text x="360" y="250" font-family="sans-serif" font-size="13" font-weight="bold" color="#e74c3c" class="zh">斜率越陡峭 &rarr; 比熱容量越小</text>
+            </svg>
+        </div>
+    </div>
+
+    <!-- CQ1 -->
+    <div class="question-card medium">
+        <span class="section-label label-medium en">Standard Calculation</span>
+        <span class="section-label label-medium zh">標準計算</span>
+        <h3 class="en">Q1: Phase Change & Mixtures</h3>
+        <h3 class="zh">Q1：物態變化與混合</h3>
+        <div class="en">
+            <p>0.50 kg of ice at 0&deg;C is mixed with 1.2 kg of water at 60&deg;C in an insulated container. (c_water = 4200 J kg<sup>-1</sup> &deg;C<sup>-1</sup>, l_fusion = 3.34 &times; 10<sup>5</sup> J kg<sup>-1</sup>)</p>
+            <p>(a) Show by calculation that all ice will melt. <span class="marks">(2 marks)</span></p>
+            <p>(b) Calculate the final equilibrium temperature. <span class="marks">(2 marks)</span></p>
+        </div>
+        <div class="zh">
+            <p>將 0.50 kg，0&deg;C 的冰與 1.2 kg，60&deg;C 的水在隔熱容器內混合。(c_水 = 4200 J kg<sup>-1</sup> &deg;C<sup>-1</sup>, l_熔化 = 3.34 &times; 10<sup>5</sup> J kg<sup>-1</sup>)</p>
+            <p>(a) 藉計算證明所有冰均會熔化。 <span class="marks">(2分)</span></p>
+            <p>(b) 計算最後的平衡溫度。 <span class="marks">(2分)</span></p>
+        </div>
+        <button class="btn btn-hint" onclick="toggleDisplay('hint-cq1')"><span class="en">Show Hint</span><span class="zh">顯示提示</span></button>
+        <button class="btn btn-sol" onclick="toggleDisplay('sol-cq1')"><span class="en">Show Solution</span><span class="zh">顯示題解</span></button>
+        <div id="hint-cq1" class="hint-box">
+            <p class="en"><strong>Hint:</strong> (a) Compare energy to melt all ice ($ml$) vs max energy hot water can give ($mc\Delta T$ dropping to 0). (b) Let final temp = T. Heat lost by hot water = Heat gained melting ice + Heat gained by melted ice warming up.</p>
+            <p class="zh"><strong>提示:</strong> (a) 比較熔化冰所需能量 ($ml$) 與熱水能釋放的最高能量 ($mc\Delta T$ 降至0)。(b) 設最後溫度 = T。熱水失去的熱 = 熔化冰吸收的熱 + 冰水升溫吸收的熱。</p>
+        </div>
+        <div id="sol-cq1" class="solution-box">
+            <div class="en">
+                <p><strong>(a)</strong> Energy to melt ice = 0.50 &times; 3.34 &times; 10<sup>5</sup> = 167,000 J <span class="marks">[1M]</span><br>
+                Max energy from water = 1.2 &times; 4200 &times; 60 = 302,400 J.<br> 
+                Since 302,400 > 167,000, all ice melts. <span class="marks">[1A]</span></p>
+                <p><strong>(b)</strong> 1.2 &times; 4200 &times; (60 - T) = 167000 + 0.50 &times; 4200 &times; (T - 0) <span class="marks">[1M]</span><br>
+                302400 - 5040T = 167000 + 2100T &rarr; T = 19.0 &deg;C <span class="marks">[1A]</span></p>
+            </div>
+            <div class="zh">
+                <p><strong>(a)</strong> 熔化冰所需能量 = 0.50 &times; 3.34 &times; 10<sup>5</sup> = 167,000 J <span class="marks">[1M]</span><br>
+                水可釋放最高能量 = 1.2 &times; 4200 &times; 60 = 302,400 J。<br>
+                因為 302,400 > 167,000，所有冰會熔化。<span class="marks">[1A]</span></p>
+                <p><strong>(b)</strong> 1.2 &times; 4200 &times; (60 - T) = 167000 + 0.50 &times; 4200 &times; (T - 0) <span class="marks">[1M]</span><br>
+                302400 - 5040T = 167000 + 2100T &rarr; T = 19.0 &deg;C <span class="marks">[1A]</span></p>
+            </div>
+        </div>
+    </div>
+
+
+    <!-- LEVEL 3: ADVANCED -->
+    <h2 class="en hard-section">Level 3: Advanced (Challenging Applications)</h2>
+    <h2 class="zh hard-section">第三級：高階 (挑戰性應用)</h2>
+
+    <!-- CQ2: Challenging Graph -->
+    <div class="question-card hard">
+        <span class="section-label label-hard en">Graph Interpretation</span>
+        <span class="section-label label-hard zh">圖表分析</span>
+        <h3 class="en">Q2: Power, Time, and Phase Changes</h3>
+        <h3 class="zh">Q2：功率、時間與物態變化</h3>
+        
+        <div class="en">
+            <p>0.8 kg of a solid substance X is heated steadily by a 100 W electric heater. The temperature-time graph of the substance is shown below. Assume no heat is lost to the surroundings.</p>
+        </div>
+        <div class="zh">
+            <p>使用 100 W 的電熱器穩定加熱 0.8 kg 固體物質 X。其溫度-時間圖像如下。假設無熱量流失。</p>
+        </div>
+
+        <div class="svg-container" style="max-width: 550px; margin: 0 auto 15px auto;">
+            <svg width="500" height="250" viewBox="0 0 500 250" xmlns="http://www.w3.org/2000/svg">
+                <line x1="40" y1="200" x2="480" y2="200" stroke="black" stroke-width="2" />
+                <line x1="40" y1="200" x2="40" y2="20" stroke="black" stroke-width="2" />
+                <text x="220" y="240" font-family="sans-serif" font-size="14" class="en">Time / minutes</text>
+                <text x="220" y="240" font-family="sans-serif" font-size="14" class="zh">時間 / 分鐘</text>
+                <text x="12" y="120" font-family="sans-serif" font-size="14" transform="rotate(-90 15,120)" class="en">Temp (&deg;C)</text>
+                <text x="12" y="120" font-family="sans-serif" font-size="14" transform="rotate(-90 15,120)" class="zh">溫度 (&deg;C)</text>
+                
+                <line x1="35" y1="170" x2="45" y2="170" stroke="black" /> <text x="15" y="175" font-family="sans-serif" font-size="12">20</text>
+                <line x1="35" y1="100" x2="45" y2="100" stroke="black" /> <text x="15" y="105" font-family="sans-serif" font-size="12">80</text>
+                <line x1="120" y1="195" x2="120" y2="205" stroke="black" /> <text x="115" y="220" font-family="sans-serif" font-size="12">4</text>
+                <line x1="260" y1="195" x2="260" y2="205" stroke="black" /> <text x="250" y="220" font-family="sans-serif" font-size="12">10</text>
+                <line x1="380" y1="195" x2="380" y2="205" stroke="black" /> <text x="370" y="220" font-family="sans-serif" font-size="12">15</text>
+
+                <polyline points="40,170 120,100 260,100 380,50" fill="none" stroke="#8e44ad" stroke-width="3" />
+                
+                <line x1="40" y1="100" x2="120" y2="100" stroke="#ccc" stroke-dasharray="3,3" />
+                <line x1="120" y1="200" x2="120" y2="100" stroke="#ccc" stroke-dasharray="3,3" />
+                <line x1="260" y1="200" x2="260" y2="100" stroke="#ccc" stroke-dasharray="3,3" />
+            </svg>
+        </div>
+
+        <div class="en">
+            <p>(a) Calculate the specific heat capacity of substance X in its solid state. <span class="marks">(2 marks)</span></p>
+            <p>(b) Calculate the specific latent heat of fusion of substance X. <span class="marks">(2 marks)</span></p>
+            <p>(c) Deduce whether the specific heat capacity in liquid state is greater or smaller than in solid state. <span class="marks">(2 marks)</span></p>
+        </div>
+        <div class="zh">
+            <p>(a) 計算物質 X 在固態時的比熱容量。 <span class="marks">(2分)</span></p>
+            <p>(b) 計算物質 X 的熔化比潛熱。 <span class="marks">(2分)</span></p>
+            <p>(c) 推斷物質 X 在液態時的比熱容量是較固態時大還是小？ <span class="marks">(2分)</span></p>
+        </div>
+
+        <button class="btn btn-hint" onclick="toggleDisplay('hint-cq2')"><span class="en">Show Hint</span><span class="zh">顯示提示</span></button>
+        <button class="btn btn-sol" onclick="toggleDisplay('sol-cq2')"><span class="en">Show Solution</span><span class="zh">顯示題解</span></button>
+        
+        <div id="hint-cq2" class="hint-box">
+            <p class="en"><strong>Hint:</strong> (a) Convert minutes to seconds! E = Pt = mc&Delta;T. (c) A gentler slope means the temperature rises more slowly for the same energy.</p>
+            <p class="zh"><strong>提示:</strong> (a) 將分鐘轉換為秒！E = Pt = mc&Delta;T。(c) 斜率較平緩代表在相同能量下溫度上升較慢。</p>
+        </div>
+        <div id="sol-cq2" class="solution-box">
+            <div class="en">
+                <p><strong>(a)</strong> Heating time = 4 mins = 240 s. &Delta;T = 80 - 20 = 60 &deg;C.<br>
+                Pt = mc&Delta;T &rarr; 100 &times; 240 = 0.8 &times; c &times; 60 <span class="marks">[1M]</span><br>
+                c = 500 J kg<sup>-1</sup> &deg;C<sup>-1</sup> <span class="marks">[1A]</span></p>
+                <p><strong>(b)</strong> Melting time = 10 - 4 = 6 mins = 360 s.<br>
+                Pt = ml_f &rarr; 100 &times; 360 = 0.8 &times; l_f <span class="marks">[1M]</span><br>
+                l_f = 45,000 J kg<sup>-1</sup> <span class="marks">[1A]</span></p>
+                <p><strong>(c)</strong> It is <strong>greater</strong>. <span class="marks">[1A]</span><br>
+                The slope of the liquid phase is less steep. A gentler slope means slower temperature rise for the same power input, indicating larger heat capacity. <span class="marks">[1A]</span></p>
+            </div>
+            <div class="zh">
+                <p><strong>(a)</strong> 加熱時間 = 4 分鐘 = 240 秒。&Delta;T = 80 - 20 = 60 &deg;C。<br>
+                Pt = mc&Delta;T &rarr; 100 &times; 240 = 0.8 &times; c &times; 60 <span class="marks">[1M]</span><br>
+                c = 500 J kg<sup>-1</sup> &deg;C<sup>-1</sup> <span class="marks">[1A]</span></p>
+                <p><strong>(b)</strong> 熔化時間 = 10 - 4 = 6 分鐘 = 360 秒。<br>
+                Pt = ml_f &rarr; 100 &times; 360 = 0.8 &times; l_f <span class="marks">[1M]</span><br>
+                l_f = 45,000 J kg<sup>-1</sup> <span class="marks">[1A]</span></p>
+                <p><strong>(c)</strong> <strong>較大</strong>。<span class="marks">[1A]</span><br>
+                液態階段的斜率較平緩。代表在相同功率輸入下溫度上升較慢，這表示它有較大的熱容量。<span class="marks">[1A]</span></p>
+            </div>
+        </div>
+    </div>
+
+    <!-- CQ3: Cooling curve -->
+    <div class="question-card hard">
+        <span class="section-label label-hard en">Rate of Heat Transfer</span>
+        <span class="section-label label-hard zh">熱傳遞速率</span>
+        <h3 class="en">Q3: Cooling Curves</h3>
+        <h3 class="zh">Q3：冷卻曲線</h3>
+        <div class="en">
+            <p>0.3 kg of a hot beverage (c = 4000 J/kg&deg;C) at 85&deg;C is placed in a 25&deg;C room. After 5 minutes, its temperature drops to 65&deg;C.</p>
+            <p>(a) Calculate the average rate of heat loss (in Watts) during these 5 minutes. <span class="marks">(2 marks)</span></p>
+            <p>(b) Predict whether the temperature drop in the next 5 minutes will be greater than, equal to, or less than 20&deg;C. Explain briefly. <span class="marks">(2 marks)</span></p>
+        </div>
+        <div class="zh">
+            <p>0.3 kg 熱飲 (c = 4000 J/kg&deg;C) 初始溫度為 85&deg;C，放於 25&deg;C 的房間。5 分鐘後降至 65&deg;C。</p>
+            <p>(a) 計算在這 5 分鐘內，平均散熱速率 (以瓦特 Watts 為單位)。 <span class="marks">(2分)</span></p>
+            <p>(b) 預測在接下來的 5 分鐘內，溫度下降將大於、等於還是小於 20&deg;C？試簡略解釋。 <span class="marks">(2分)</span></p>
+        </div>
+        <button class="btn btn-hint" onclick="toggleDisplay('hint-cq3')"><span class="en">Show Hint</span><span class="zh">顯示提示</span></button>
+        <button class="btn btn-sol" onclick="toggleDisplay('sol-cq3')"><span class="en">Show Solution</span><span class="zh">顯示題解</span></button>
+        
+        <div id="hint-cq3" class="hint-box">
+            <p class="en"><strong>Hint:</strong> Rate of heat loss = Energy / time(s). Rate of cooling depends on the temperature difference between object and surroundings.</p>
+            <p class="zh"><strong>提示:</strong> 散熱速率 = 能量 / 時間(秒)。冷卻速率取決於物體與四周環境的溫度差。</p>
+        </div>
+        <div id="sol-cq3" class="solution-box">
+            <div class="en">
+                <p><strong>(a)</strong> Total heat lost Q = mc&Delta;T = 0.3 &times; 4000 &times; 20 = 24000 J <span class="marks">[1M]</span><br>
+                Average rate = Q / t = 24000 / (5 &times; 60) = 80 W <span class="marks">[1A]</span></p>
+                <p><strong>(b)</strong> Less than 20&deg;C. <span class="marks">[1A]</span><br>
+                Rate of heat loss decreases as the temperature difference between the beverage and the room decreases. <span class="marks">[1A]</span></p>
+            </div>
+            <div class="zh">
+                <p><strong>(a)</strong> 總散失熱量 Q = mc&Delta;T = 0.3 &times; 4000 &times; 20 = 24000 J <span class="marks">[1M]</span><br>
+                平均速率 = Q / t = 24000 / (5 &times; 60) = 80 W <span class="marks">[1A]</span></p>
+                <p><strong>(b)</strong> 小於 20&deg;C。<span class="marks">[1A]</span><br>
+                散熱速率會隨著熱飲與房間之間的溫度差縮小而減慢。<span class="marks">[1A]</span></p>
+            </div>
+        </div>
+    </div>
+
+
+    <!-- FINAL LEVEL: MCQ QUIZ -->
+    <h2 class="en">Level 4: Master Quiz (20 MCQs)</h2>
+    <h2 class="zh">第四級：綜合測驗 (20條多項選擇題)</h2>
+    <p class="en" style="color:#7f8c8d; font-weight:bold;">Questions scale from basic definitions to challenging calculations.</p>
+    <p class="zh" style="color:#7f8c8d; font-weight:bold;">題目難度由基本定義遞進至高難度計算。</p>
+    
+    <div id="mcq-container">
+        <!-- JS will populate MCQs -->
+    </div>
+    
+    <button class="btn mc-submit-btn" onclick="checkMCQ()">
+        <span class="en">Submit Quiz & Check Answers</span>
+        <span class="zh">提交測驗並核對答案</span>
+    </button>
+
+    <script>
+        function toggleLanguage() {
+            const body = document.body;
+            if (body.classList.contains('lang-en')) {
+                body.classList.remove('lang-en');
+                body.classList.add('lang-zh');
+            } else {
+                body.classList.remove('lang-zh');
+                body.classList.add('lang-en');
+            }
+        }
+
+        function toggleDisplay(id) {
+            const el = document.getElementById(id);
+            el.style.display = (el.style.display === 'block') ? 'none' : 'block';
+        }
+
+        const mcqs = [
+            {
+                q_en: "1. Equal energy is supplied to four substances. Which has the largest temp rise? (P: 2kg, c=4000; Q: 3kg, c=2000; R: 4kg, c=1000; S: 5kg, c=900)",
+                q_zh: "1. 相同的能量供應給四種物質。哪一種的溫度上升最高？ (P: 2kg, c=4000; Q: 3kg, c=2000; R: 4kg, c=1000; S: 5kg, c=900)",
+                options: ["P", "Q", "R", "S"],
+                ans: 2,
+                exp_en: "Temp rise is inversely proportional to heat capacity C (where C = mc). C of R = 4000, which is the smallest.",
+                exp_zh: "溫度上升與熱容量 C 成反比 (C = mc)。R 的 C = 4000，是最小的。"
+            },
+            {
+                q_en: "2. What does the steepness (gradient) of the rising sections of a temperature-energy graph indicate?",
+                q_zh: "2. 在溫度-能量圖像中，上升部分的斜率代表甚麼？",
+                options: ["Specific heat capacity", "1 / Specific heat capacity", "Heat capacity", "1 / Heat capacity"],
+                ans: 3,
+                exp_en: "Gradient = &Delta;T / &Delta;E = 1/C. It is inversely proportional to the heat capacity.",
+                exp_zh: "斜率 = &Delta;T / &Delta;E = 1/C。這與熱容量成反比。"
+            },
+            {
+                q_en: "3. Two identical flasks X and Y contain He and Ar gas at the same room temp and pressure. Which is/are the same? (1) Avg kinetic energy (2) RMS speed (3) No. of molecules",
+                q_zh: "3. 兩個相同的燒瓶 X 和 Y 分別裝有 He 和 Ar 氣體，兩者處於室溫及相同壓力。下列哪項是相同的？ (1) 平均動能 (2) 均方根速率 (3) 分子數量",
+                options: ["(1) only", "(1) and (3) only", "(2) and (3) only", "(1), (2) and (3)"],
+                ans: 1,
+                exp_en: "Avg KE depends only on T. No. of molecules depends on P, V, T (ideal gas law). RMS speed differs due to different molecular masses.",
+                exp_zh: "平均動能只取決於 T。分子數量取決於 P,V,T (理想氣體定律)。均方根速率因分子質量不同而異。"
+            },
+            {
+                q_en: "4. Why does wrapping a cold bottle in aluminum foil (shiny side out) keep it cold?",
+                q_zh: "4. 為何將冷水樽包上鋁箔（光澤面向外）能保持低溫？",
+                options: ["It is a good conductor", "It traps cold air", "It is a poor absorber of radiation", "It prevents condensation"],
+                ans: 2,
+                exp_en: "Shiny surfaces are poor absorbers (good reflectors) of thermal radiation from the surroundings.",
+                exp_zh: "光澤表面是周圍熱輻射的較差吸收體（良好反射體）。"
+            },
+            {
+                q_en: "5. In finding latent heat of fusion of ice, if the calculated value is lower than accepted, what is the likely cause?",
+                q_zh: "5. 在測定冰的熔化潛熱時，若計算值低於公認值，最可能的原因是甚麼？",
+                options: ["Ice was too cold", "Heat from the room melted extra ice", "Heater was not fully covered", "Water evaporated"],
+                ans: 1,
+                exp_en: "If room temp melts extra ice, measured mass 'm' is larger, leading to a smaller calculated 'l' (l = E/m).",
+                exp_zh: "若室溫熔化了額外的冰，量度的質量 'm' 會變大，導致算出的 'l' 偏低 (l = E/m)。"
+            },
+            {
+                q_en: "6. 150g water at 80&deg;C mixes with 50g water at 20&deg;C in a glass beaker initially at 20&deg;C. Final temp is:",
+                q_zh: "6. 在原本 20&deg;C 的玻璃燒杯中，將 150g 80&deg;C 的水與 50g 20&deg;C 的水混合。最後溫度是：",
+                options: ["Exactly 65&deg;C", "Strictly lower than 65&deg;C", "Strictly higher than 65&deg;C", "Exactly 50&deg;C"],
+                ans: 1,
+                exp_en: "Without beaker, weighted avg = 65. The cold beaker absorbs heat, dropping the final temp below 65&deg;C.",
+                exp_zh: "不計燒杯，加權平均 = 65。冷燒杯會吸收熱量，所以最後溫度低於 65&deg;C。"
+            },
+            {
+                q_en: "7. Gas volume is halved at constant absolute temperature. What happens to RMS speed?",
+                q_zh: "7. 氣體體積在恆定絕對溫度下減半。均方根速率會如何變化？",
+                options: ["Doubles", "Halves", "Increases by &radic;2", "Remains unchanged"],
+                ans: 3,
+                exp_en: "RMS speed depends ONLY on absolute temperature.",
+                exp_zh: "均方根速率只取決於絕對溫度。"
+            },
+            {
+                q_en: "8. A 2kW kettle boils water. 10% energy is lost. Time to vaporize 0.5kg of boiling water? (l_v = 2.26 &times; 10^6)",
+                q_zh: "8. 2kW 恆溫壺沸騰水。有 10% 能量流失。汽化 0.5kg 沸水需要多少時間？ (l_v = 2.26 &times; 10^6)",
+                options: ["565 s", "628 s", "508 s", "690 s"],
+                ans: 1,
+                exp_en: "Useful power = 1800 W. 1800 &times; t = 0.5 &times; 2.26 &times; 10^6. t &approx; 628 s.",
+                exp_zh: "有用功率 = 1800 W。1800 &times; t = 0.5 &times; 2.26 &times; 10^6。t &approx; 628 s。"
+            },
+            {
+                q_en: "9. (Challenging) Substances A and B of equal mass are heated by identical heaters. The temp-time graph of A is steeper than B. Which is correct?",
+                q_zh: "9. (挑戰) 質量相同的物質 A 和 B 由相同發熱器加熱。A 的溫度-時間圖像比 B 陡峭。哪項正確？",
+                options: ["A has a higher specific heat capacity.", "B has a higher specific heat capacity.", "A absorbs more heat per minute.", "Both have the same heat capacity."],
+                ans: 1,
+                exp_en: "Steeper slope = smaller specific heat capacity. B is gentler, so B has higher specific heat capacity.",
+                exp_zh: "斜率較陡 = 比熱容量較小。B 較平緩，所以 B 的比熱容量較高。"
+            },
+            {
+                q_en: "10. (Challenging) A 2kg liquid is heated by a 500W heater. Temp rises from 30&deg;C to 70&deg;C in 200s. Assuming 20% heat loss, what is its c?",
+                q_zh: "10. (挑戰) 500W 發熱器加熱 2kg 液體。溫度在 200s 內由 30&deg;C 升至 70&deg;C。假設 20% 熱量流失，c 是多少？",
+                options: ["1250 J/kg&deg;C", "1000 J/kg&deg;C", "800 J/kg&deg;C", "1500 J/kg&deg;C"],
+                ans: 1,
+                exp_en: "Useful E = 500 &times; 200 &times; 0.8 = 80,000 J. 80,000 = 2 &times; c &times; 40. c = 1000 J/kg&deg;C.",
+                exp_zh: "有用 E = 500 &times; 200 &times; 0.8 = 80,000 J。80,000 = 2 &times; c &times; 40。c = 1000 J/kg&deg;C。"
+            }
+        ,
+
+            {
+                q_en: "11. Equal energy is supplied to four solid substances without phase change. P (2kg, c=4000), Q (3kg, c=2000), R (4kg, c=1000), S (5kg, c=900). Which experiences the largest temp rise?",
+                q_zh: "11. 相同的能量供應給四種沒有發生相變的固體。P (2kg, c=4000), Q (3kg, c=2000), R (4kg, c=1000), S (5kg, c=900)。哪一種的溫度上升最高？",
+                options: ["Substance P", "Substance Q", "Substance R", "Substance S"],
+                ans: 2,
+                exp_en: "Temp rise is inversely proportional to heat capacity C (where C = mc). C of P=8000, Q=6000, R=4000, S=4500. R is the smallest.",
+                exp_zh: "溫度上升與熱容量 C 成反比 (C = mc)。P的C=8000，Q=6000，R=4000，S=4500。R 是最小的。"
+            },
+            {
+                q_en: "12. What does the steepness (gradient) of the rising sections of a temperature-time graph for a steadily heated substance indicate?",
+                q_zh: "12. 在穩定加熱物質的溫度-時間圖像中，上升部分的斜率代表甚麼？",
+                options: ["It is proportional to specific heat capacity.", "It is inversely proportional to specific heat capacity.", "It is proportional to latent heat.", "It is inversely proportional to latent heat."],
+                ans: 1,
+                exp_en: "Gradient = &Delta;T / &Delta;t. Since P = mc(&Delta;T / &Delta;t), the gradient is P / (mc), which is inversely proportional to the specific heat capacity 'c'.",
+                exp_zh: "斜率 = &Delta;T / &Delta;t。因為 P = mc(&Delta;T / &Delta;t)，斜率是 P / (mc)，這與比熱容量 'c' 成反比。"
+            },
+            {
+                q_en: "13. Two identical sealed flasks contain Helium and Argon gases at room temperature and the same pressure. Which physical quantities are the same? (1) Average kinetic energy (2) RMS speed (3) Number of molecules",
+                q_zh: "13. 兩個相同的密封燒瓶分別裝有室溫及相同壓力的氦氣和氬氣。哪些物理量是相同的？ (1) 平均動能 (2) 均方根速率 (3) 分子數量",
+                options: ["(1) only", "(1) and (3) only", "(2) and (3) only", "(1), (2) and (3)"],
+                ans: 1,
+                exp_en: "Average KE depends only on temperature. Number of molecules depends on P, V, T (ideal gas law). RMS speed differs because Argon is heavier than Helium.",
+                exp_zh: "平均動能只取決於溫度。分子數量取決於 P, V, T (理想氣體定律)。均方根速率不同，因為氬氣比氦氣重。"
+            },
+            {
+                q_en: "14. Why does wrapping a cold water bottle in aluminum foil (shiny side out) keep it cold for longer?",
+                q_zh: "14. 為何將冷水樽包上鋁箔（光澤面向外）能保持低溫較長時間？",
+                options: ["The foil conducts heat away from the water.", "The foil traps a layer of cold air.", "The foil is a poor absorber of thermal radiation.", "The foil prevents condensation from forming."],
+                ans: 2,
+                exp_en: "The shiny surface of the aluminum foil is a poor absorber (and a good reflector) of thermal radiation from the warmer surroundings.",
+                exp_zh: "鋁箔的光澤表面是周圍溫暖環境熱輻射的較差吸收體（以及良好反射體）。"
+            },
+            {
+                q_en: "15. When measuring the specific latent heat of fusion of ice, the calculated value is lower than accepted. What is the most likely cause?",
+                q_zh: "15. 在量度冰的熔化比潛熱時，計算值低於公認值。最可能的原因是甚麼？",
+                options: ["The ice was initially below 0&deg;C.", "Ice melted due to the surrounding room temperature.", "The heater was not completely covered by ice.", "Some water evaporated during the experiment."],
+                ans: 1,
+                exp_en: "If room temperature melts extra ice, the measured mass 'm' of melted ice is too large. Since calculated l = E / m, a larger denominator results in a lower calculated 'l'.",
+                exp_zh: "如果室溫熔化了額外的冰，量得的熔化冰質量 'm' 會過大。由於計算出的 l = E / m，較大的分母會導致算出的 'l' 較低。"
+            },
+            {
+                q_en: "16. A thermometer is unsuitable for measuring the temperature of a solid block. What is the main reason?",
+                q_zh: "16. 溫度計不適合量度固體塊的溫度。主要原因是什麼？",
+                options: ["The glass will break at high temperatures.", "There is poor thermal contact between the thermometer and the solid.", "The liquid inside will vaporize.", "The solid absorbs too much heat from the thermometer."],
+                ans: 1,
+                exp_en: "A standard thermometer relies on good thermal contact to reach thermal equilibrium with the object. For a solid block, there is poor thermal contact (only a tiny area touches).",
+                exp_zh: "標準溫度計依賴良好的熱接觸以與物體達到熱平衡。對於固體塊，熱接觸很差（只有極小面積接觸）。"
+            }
+,
+
+            {
+                q_en: "17. A $150\text{ g}$ sample of water at $80^\circ\text{C}$ is mixed with $50\text{ g}$ of water at $20^\circ\text{C}$ inside a glass beaker initially at $20^\circ\text{C}$. Which best describes the final equilibrium temperature?",
+                q_zh: "17. 在一個初始溫度為 $20^\circ\text{C}$ 的玻璃燒杯內，將 $150\text{ g}$、$80^\circ\text{C}$ 的水與 $50\text{ g}$、$20^\circ\text{C}$ 的水混合。下列哪項最能描述最後的平衡溫度？",
+                options: ["Exactly $65^\circ\text{C}$", "Strictly lower than $65^\circ\text{C}$", "Strictly higher than $65^\circ\text{C}$", "Exactly $50^\circ\text{C}$"],
+                ans: 1,
+                exp_en: "Without the beaker, the theoretical weighted average is $65^\circ\text{C}$. However, the cold beaker absorbs some of the heat from the hot water, meaning the final temperature must be strictly lower than $65^\circ\text{C}$.",
+                exp_zh: "如果不考慮燒杯，理論上的加權平均溫度是 $65^\circ\text{C}$。然而，冷卻的燒杯會從熱水中吸收部分熱量，這意味著最終溫度必須嚴格低於 $65^\circ\text{C}$。"
+            },
+            {
+                q_en: "18. An ideal gas is enclosed in a cylinder with a movable piston. The volume of the gas is halved by compressing it slowly, while the absolute temperature is kept constant. What happens to the root-mean-square (r.m.s.) speed of the gas molecules?",
+                q_zh: "18. 理想氣體被封閉在帶有可移動活塞的氣缸內。緩慢壓縮氣體使其體積減半，同時保持絕對溫度不變。氣體分子的均方根 (r.m.s.) 速率會發生什麼變化？",
+                options: ["It doubles.", "It halves.", "It remains unchanged.", "It increases by a factor of $\sqrt{2}$."],
+                ans: 2,
+                exp_en: "According to the kinetic theory of gases, the r.m.s. speed depends solely on the absolute temperature of the gas. Since the temperature is kept constant, the r.m.s. speed remains unchanged.",
+                exp_zh: "根據氣體分子運動論，均方根速率僅取決於氣體的絕對溫度。由於溫度保持不變，均方根速率保持不變。"
+            },
+            {
+                q_en: "19. A $2\text{ kW}$ electric kettle is used to boil water. Assuming $10\%$ of the energy supplied is lost to the surroundings, how long will it take to vaporize $0.5\text{ kg}$ of water that is already boiling at $100^\circ\text{C}$? (Given: Specific latent heat of vaporization of water = $2.26 \times 10^6\text{ J kg}^{-1}$)",
+                q_zh: "19. 使用一個 $2\text{ kW}$ 的電熱水壺煮水。假設 $10\%$ 的供應能量流失到周圍環境，需要多長時間才能使 $0.5\text{ kg}$ 已在 $100^\circ\text{C}$ 沸騰的水完全汽化？(已知：水的汽化比潛熱 = $2.26 \times 10^6\text{ J kg}^{-1}$)",
+                options: ["$508\text{ s}$", "$565\text{ s}$", "$628\text{ s}$", "$690\text{ s}$"],
+                ans: 2,
+                exp_en: "Useful power = $2000 \times 0.9 = 1800\text{ W}$. Energy needed = $ml = 0.5 \times 2.26 \times 10^6 = 1,130,000\text{ J}$. Time $t = E/P = 1,130,000 / 1800 \approx 628\text{ s}$.",
+                exp_zh: "有用功率 = $2000 \times 0.9 = 1800\text{ W}$。所需能量 = $ml = 0.5 \times 2.26 \times 10^6 = 1,130,000\text{ J}$。時間 $t = E/P = 1,130,000 / 1800 \approx 628\text{ s}$。"
+            },
+            {
+                q_en: "20. A sealed vacuum chamber at room temperature contains a residual pressure of exactly $10^{-6}\text{ Pa}$. What is the order of magnitude of the number of gas molecules per cubic meter ($1\text{ m}^3$) in this vacuum chamber? (Given: $R = 8.31\text{ J mol}^{-1}\text{ K}^{-1}$, $N_A = 6.02 \times 10^{23}\text{ mol}^{-1}$, Room temperature $\approx 300\text{ K}$)",
+                q_zh: "20. 一個位於室溫的密封真空室內殘留壓力恰好為 $10^{-6}\text{ Pa}$。該真空室內每立方米 ($1\text{ m}^3$) 氣體分子數量的數量級是多少？(已知：$R = 8.31\text{ J mol}^{-1}\text{ K}^{-1}$，$N_A = 6.02 \times 10^{23}\text{ mol}^{-1}$，室溫 $\approx 300\text{ K}$)",
+                options: ["$10^8$", "$10^{10}$", "$10^{12}$", "$10^{14}$"],
+                ans: 3,
+                exp_en: "Using $pV = NkT$ (where $k = R/N_A = 1.38 \times 10^{-23}\text{ J/K}$). $N = pV / kT = (10^{-6} \times 1) / (1.38 \times 10^{-23} \times 300) = 10^{-6} / (4.14 \times 10^{-21}) \approx 2.4 \times 10^{14}$. The order of magnitude is $10^{14}$.",
+                exp_zh: "使用 $pV = NkT$ (其中 $k = R/N_A = 1.38 \times 10^{-23}\text{ J/K}$)。$N = pV / kT = (10^{-6} \times 1) / (1.38 \times 10^{-23} \times 300) = 10^{-6} / (4.14 \times 10^{-21}) \approx 2.4 \times 10^{14}$。數量級是 $10^{14}$。"
+            }];
+
+        const container = document.getElementById('mcq-container');
+        
+        mcqs.forEach((q, index) => {
+            let optionsHTML = '';
+            q.options.forEach((opt, oIndex) => {
+                optionsHTML += `
+                    <label class="mcq-option">
+                        <input type="radio" name="q${index}" value="${oIndex}">
+                        ${opt}
+                    </label>
+                `;
+            });
+
+            container.innerHTML += `
+                <div class="question-card" style="box-shadow: none; border-left: 4px solid var(--secondary);">
+                    <p class="en"><strong>${q.q_en}</strong></p>
+                    <p class="zh"><strong>${q.q_zh}</strong></p>
+                    ${optionsHTML}
+                    <div id="feedback-${index}" class="mcq-feedback"></div>
+                </div>
+            `;
+        });
+
+        function checkMCQ() {
+            let score = 0;
+            mcqs.forEach((q, index) => {
+                const selected = document.querySelector(`input[name="q${index}"]:checked`);
+                const feedback = document.getElementById(`feedback-${index}`);
+                feedback.style.display = 'block';
+                
+                if (selected) {
+                    const val = parseInt(selected.value);
+                    if (val === q.ans) {
+                        score++;
+                        feedback.className = 'mcq-feedback correct';
+                        feedback.innerHTML = `
+                            <span class="en">&#10004; Correct! ${q.exp_en}</span>
+                            <span class="zh">&#10004; 答對！ ${q.exp_zh}</span>
+                        `;
+                    } else {
+                        feedback.className = 'mcq-feedback incorrect';
+                        feedback.innerHTML = `
+                            <span class="en">&#10008; Incorrect. Correct answer: ${q.options[q.ans]}. ${q.exp_en}</span>
+                            <span class="zh">&#10008; 答錯。正確答案：${q.options[q.ans]}。 ${q.exp_zh}</span>
+                        `;
+                    }
+                } else {
+                    feedback.className = 'mcq-feedback incorrect';
+                    feedback.innerHTML = `
+                        <span class="en">&#9888; You missed this question!</span>
+                        <span class="zh">&#9888; 你遺漏了此題！</span>
+                    `;
+                }
+            });
+            
+            alert(`Quiz completed! You scored ${score} out of 20. Scroll up to review detailed explanations.`);
+            if (window.MathJax) { MathJax.typesetPromise(); }
+
+        }
+    </script>
+</body>
+</html>
